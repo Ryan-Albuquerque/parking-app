@@ -62,6 +62,26 @@ export async function startEvent(input: any, options: any) {
   }
 }
 
+export async function getEventHistory(options: any) {
+  try {
+    const { data } = await instance.get(
+      `api/Event/history?parkId=${options.parkId}&page=${options.page || 1}`,
+      {
+        headers: {
+          Authorization: `Bearer ${options.token}`,
+        },
+      }
+    );
+
+    return data;
+  } catch (error: any) {
+    if (error?.response?.data) {
+      throw new Error(error?.response?.data);
+    }
+    throw new Error('Erro ao buscar historico');
+  }
+}
+
 export async function finishEvent(input: any, options: any) {
   try {
     const { data } = await instance.post('api/Event/finish', input, {

@@ -11,6 +11,7 @@ import {
   Flex,
   Text,
   useDisclosure,
+  FormErrorMessage,
 } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import { startEvent, finishEvent } from '@/lib/api';
@@ -22,8 +23,18 @@ export default function Events({ user }: { user: any }) {
     position: 'top',
   });
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { register, handleSubmit, getValues, reset: resetInForm } = useForm();
-  const { register: outRegister, handleSubmit: handleOutSubmit, getValues: getOutValues, reset: resetOutForm } = useForm();
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors: inErrors },
+  } = useForm();
+  const {
+    register: outRegister,
+    handleSubmit: handleOutSubmit,
+    getValues: getOutValues,
+    formState: { errors: outErrors },
+  } = useForm();
   const [valueToPayInCents, setValueToPay] = useState<number>(0);
   const [plate, setPlate] = useState<string>('');
 
@@ -47,10 +58,13 @@ export default function Events({ user }: { user: any }) {
           status: 'success',
           isClosable: true,
         });
+        window.location.reload();
       }
-      resetInForm();
     } catch (error: any) {
-      console.error('Erro ao processar evento de entrada', JSON.stringify(error?.message));
+      console.error(
+        'Erro ao processar evento de entrada',
+        JSON.stringify(error?.message)
+      );
       toast({
         title: `Erro ao processar evento de entrada`,
         description: error.message,
@@ -82,10 +96,12 @@ export default function Events({ user }: { user: any }) {
         setValueToPay(data.paidValueInCents);
         setPlate(plateOut);
         onOpen();
-        resetOutForm();
       }
     } catch (error: any) {
-      console.error('Erro ao processar evento de saída', JSON.stringify(error?.message));
+      console.error(
+        'Erro ao processar evento de saída',
+        JSON.stringify(error?.message)
+      );
       toast({
         title: `Erro ao processar evento de saída`,
         description: error.message,
@@ -104,7 +120,7 @@ export default function Events({ user }: { user: any }) {
       >
         <Box bg="gray.100" p={4} borderRadius="md">
           <VStack spacing={4} as="form" onSubmit={handleSubmit(onGetInSubmit)}>
-            <FormControl>
+            <FormControl isInvalid={!!inErrors['plate']}>
               <Text fontSize="lg" fontWeight="bold" padding=".5rem 0">
                 Entrada
               </Text>
@@ -112,11 +128,14 @@ export default function Events({ user }: { user: any }) {
                 Placa
               </FormLabel>
               <Input
-                {...register('plate')}
+                {...register('plate', { required: 'Campo Obrigatório' })}
                 type="text"
                 id="plate"
                 placeholder="Digite a placa"
               />
+              <FormErrorMessage>
+                {(inErrors.plate && inErrors.plate.message)?.toString()}
+              </FormErrorMessage>
             </FormControl>
             <Flex justifyContent="flex-end" w="100%">
               <Button colorScheme="blue" type="submit">
@@ -126,8 +145,12 @@ export default function Events({ user }: { user: any }) {
           </VStack>
         </Box>
         <Box bg="gray.100" p={4} borderRadius="md">
-          <VStack spacing={4} as="form" onSubmit={handleOutSubmit(onGetOutSubmit)}>
-            <FormControl>
+          <VStack
+            spacing={4}
+            as="form"
+            onSubmit={handleOutSubmit(onGetOutSubmit)}
+          >
+            <FormControl isInvalid={!!outErrors['plateOut']}>
               <Text fontSize="lg" fontWeight="bold" padding=".5rem 0">
                 Saída
               </Text>
@@ -135,11 +158,14 @@ export default function Events({ user }: { user: any }) {
                 Placa
               </FormLabel>
               <Input
-                {...outRegister('plateOut')}
+                {...outRegister('plateOut', { required: 'Campo obrigatório' })}
                 type="text"
                 id="plate"
                 placeholder="Digite a placa"
               />
+              <FormErrorMessage>
+                {(outErrors.plateOut && outErrors.plateOut.message)?.toString()}
+              </FormErrorMessage>
             </FormControl>
             <Flex justifyContent="flex-end" w="100%">
               <Button colorScheme="red" type="submit">

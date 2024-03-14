@@ -1,55 +1,62 @@
-'use client'
+'use client';
+import EventHistoryTable from '@/components/organisms/EventHistoryTable';
 import Events from '@/components/template/Events';
 import { getUserInfo } from '@/lib/api';
-import { Box, Button, Flex, useToast } from '@chakra-ui/react';
+import { Box, Button, Flex, useBreakpointValue, useToast } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const getUser = async (token?: string) => {
-  try {
-    const data = await getUserInfo(token);
-    return data;
-  } catch (error: any) {
-    console.error('Erro ao buscar dados do usuário', JSON.stringify(error?.message));
-    return null;
-  }
-};
-
 export default function Index() {
   const router = useRouter();
-  const toast = useToast({
-    position: 'top',
-  });
+  const toast = useToast({ position: 'top' });
 
-  const [user, setUser] = useState();
-  const [token, setToken] = useState(localStorage?.getItem('token') ?? '');
-
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState('');
 
   useEffect(() => {
-    const getData = async () => {
-      const data = await getUser(token);
-
-      if (!data) {
-        toast({
-          title: 'Erro ao buscar dados de usuário',
-          description: "Faça login novamente",
-          status: 'error',
-          isClosable: true,
-        });
-        router.push('/');
+    const getToken = () => {
+      const storedToken = localStorage.getItem('token');
+      if (storedToken) {
+        setToken(storedToken);
       }
-
-      setUser(data);
     };
 
-    getData();
-  }, [token]);
+    getToken();
+  }, []);
+
+  useEffect(() => {
+    if (token && !user) {
+      const getData = async () => {
+        try {
+          const data = await getUserInfo(token);
+          if (!data) {
+            throw new Error('Faça login novamente');
+          }
+          setUser(data);
+        } catch (error: any) {
+          toast({
+            title: 'Erro ao buscar dados de usuário',
+            description: error.message,
+            status: 'error',
+            isClosable: true,
+          });
+          router.push('/');
+        }
+      };
+
+      getData();
+    }
+  }, [token, user, router, toast]);
 
   const handleSignOut = () => {
-    localStorage?.removeItem('token');
+    localStorage.removeItem('token');
     setToken('');
-    router.refresh();
+    setUser(null);
+    router.push('/');
   };
+
+
+  const maxBoxWidth = useBreakpointValue({ base: '100%', lg: '80%' });
 
   return (
     <>
@@ -65,7 +72,12 @@ export default function Index() {
           </Button>
         </Box>
       </Flex>
-      <Events user={user}/>
+      <Flex justifyContent='center'>
+        <Box maxWidth={maxBoxWidth}>
+          <Events user={user} />
+          <EventHistoryTable user={user} />
+        </Box>
+      </Flex>
     </>
   );
 }

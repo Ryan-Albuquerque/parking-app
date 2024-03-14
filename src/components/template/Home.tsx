@@ -15,7 +15,7 @@ import {
   useBreakpointValue,
   useToast,
 } from '@chakra-ui/react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { login, register } from '@/lib/api';
 import ILoginProps from '@/interfaces/ILoginProps';
@@ -79,7 +79,7 @@ export default function Home() {
           status: 'success',
           isClosable: true,
         });
-        router.refresh();
+        router.push('/');
       } else {
         throw new Error('Erro ao cadastrar');
       }
