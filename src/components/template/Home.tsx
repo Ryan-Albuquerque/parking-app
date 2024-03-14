@@ -113,7 +113,7 @@ export default function Home() {
             <TabPanel>
               <form onSubmit={handleLoginSubmit(onSubmitLogin)}>
                 <VStack spacing={4} align="stretch" gap="2rem">
-                  <FormControl isInvalid={loginErrors?.username}>
+                  <FormControl isInvalid={!!loginErrors['username']}>
                     <FormLabel htmlFor="username">Usuário</FormLabel>
                     <Input
                       id="username"
@@ -128,7 +128,7 @@ export default function Home() {
                       )?.toString()}
                     </FormErrorMessage>
                   </FormControl>
-                  <FormControl isInvalid={loginErrors?.password}>
+                  <FormControl isInvalid={!!loginErrors['password']}>
                     <FormLabel htmlFor="password">Senha</FormLabel>
                     <Input
                       id="password"
@@ -152,7 +152,7 @@ export default function Home() {
             <TabPanel>
               <form onSubmit={handleRegisterSubmit(onSubmitRegister)}>
                 <VStack spacing={4} align="stretch" gap="2rem">
-                  <FormControl isInvalid={registerErrors?.parkName}>
+                  <FormControl isInvalid={!!registerErrors['parkName']}>
                     <FormLabel htmlFor="parkName">
                       Nome do Estacionamento
                     </FormLabel>
@@ -171,7 +171,7 @@ export default function Home() {
                       )?.toString()}
                     </FormErrorMessage>
                   </FormControl>
-                  <FormControl isInvalid={registerErrors?.username}>
+                  <FormControl isInvalid={!!registerErrors['username']}>
                     <FormLabel htmlFor="username">Usuário</FormLabel>
                     <Input
                       id="username"
@@ -187,7 +187,7 @@ export default function Home() {
                       )?.toString()}
                     </FormErrorMessage>
                   </FormControl>
-                  <FormControl isInvalid={registerErrors?.email}>
+                  <FormControl isInvalid={!!registerErrors['email']}>
                     <FormLabel htmlFor="email">Email</FormLabel>
                     <Input
                       type="email"
@@ -202,7 +202,7 @@ export default function Home() {
                       )?.toString()}
                     </FormErrorMessage>
                   </FormControl>
-                  <FormControl isInvalid={registerErrors?.password}>
+                  <FormControl isInvalid={!!registerErrors['password']}>
                     <FormLabel htmlFor="password">Senha</FormLabel>
                     <Input
                       id="password"
