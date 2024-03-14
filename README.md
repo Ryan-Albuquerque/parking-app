@@ -1,6 +1,6 @@
-# Projeto Next.js
+# Projeto Parking System
 
-Bem-vindo ao projeto Next.js! Este projeto é uma aplicação construída com Next.js e utiliza a variável de ambiente `NEXT_PUBLIC_API_URL` para configurar a URL da API.
+Bem-vindo ao projeto Parking System! Este projeto é uma aplicação construída com Next.js e utiliza a variável de ambiente `NEXT_PUBLIC_API_URL` para configurar a URL da API.
 
 ## Configuração da Variável de Ambiente
 
