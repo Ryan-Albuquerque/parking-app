@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Projeto Next.js
 
-## Getting Started
+Bem-vindo ao projeto Next.js! Este projeto é uma aplicação construída com Next.js e utiliza a variável de ambiente `NEXT_PUBLIC_API_URL` para configurar a URL da API.
 
-First, run the development server:
+## Configuração da Variável de Ambiente
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Para configurar a URL da API, siga as etapas abaixo:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Crie um arquivo `.env.local` na raiz do projeto.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. Adicione a seguinte linha ao arquivo `.env.local`:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+   ```plaintext
+   NEXT_PUBLIC_API_URL=https://localhost:7014
+   ```
 
-## Learn More
+   Certifique-se de substituir `https://localhost:7014` pela URL da sua API.
 
-To learn more about Next.js, take a look at the following resources:
+## Execução do Projeto
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Siga as instruções abaixo para executar o projeto:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. Instale as dependências:
 
-## Deploy on Vercel
+   ```bash
+   npm install
+   # ou
+   yarn
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. Inicie o servidor de desenvolvimento:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+   ```bash
+   npm run dev
+   # ou
+   yarn dev
+   ```
+
+   Isso iniciará o projeto Next.js. A variável de ambiente `NEXT_PUBLIC_API_URL` estará disponível para uso durante o desenvolvimento.
+
+## Contribuindo
+
+Se desejar contribuir com este projeto, siga estas etapas:
+
+1. Faça um fork do repositório.
+2. Crie uma nova branch para sua funcionalidade (`git checkout -b feature/minha-funcionalidade`).
+3. Faça commit das suas alterações (`git commit -am 'Adicionando nova funcionalidade'`).
+4. Faça push para a branch (`git push origin feature/minha-funcionalidade`).
+5. Crie um novo pull request.
+
+## Licença
+
+Este projeto está licenciado sob a [Licença MIT](LICENSE).
