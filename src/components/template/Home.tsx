@@ -44,7 +44,6 @@ export default function Home() {
   const onSubmitLogin = async () => {
     try {
       const data = loginValues();
-      console.log('Login:', data);
       const token = await login(data);
 
       if (token) {
@@ -54,7 +53,7 @@ export default function Home() {
           status: 'success',
           isClosable: true,
         });
-        window.location.assign('/events');
+        router.push('/events');
       } else {
         throw new Error('Erro ao obter token');
       }
@@ -72,7 +71,6 @@ export default function Home() {
   const onSubmitRegister = async () => {
     try {
       const body = registerValues();
-      console.log('Register:', body);
       const data = await register(body);
 
       if (data) {
@@ -81,7 +79,7 @@ export default function Home() {
           status: 'success',
           isClosable: true,
         });
-        window.location.reload();
+        router.refresh();
       } else {
         throw new Error('Erro ao cadastrar');
       }
@@ -95,7 +93,7 @@ export default function Home() {
       });
     }
   };
-  const maxBoxWidth = useBreakpointValue({ base: '90%', md: '30%' });
+  const maxBoxWidth = useBreakpointValue({ base: '90%', lg: '30%' });
   return (
     <VStack
       spacing={4}
